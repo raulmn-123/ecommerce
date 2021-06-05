@@ -15,11 +15,11 @@ class Model {
 			case "get":
 				
 				return $this->values[$fieldName];
-			break;
+				break;
 			
 			case "set":
 				$this->values[$fieldName] = $args[0];
-			break;
+				break;
 		}
 	}
 
