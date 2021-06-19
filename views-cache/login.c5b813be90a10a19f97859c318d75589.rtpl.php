@@ -28,7 +28,7 @@
                 <form action="/login" id="login-form-wrap" class="login" method="post">
                     <h2>Acessar</h2>
                     <p class="form-row form-row-first">
-                        <label for="login">E-mail <span class="required">*</span>
+                        <label for="login">Login:  <span class="required">*</span>
                         </label>
                         <input type="text" id="login" name="login" class="input-text">
                     </p>
@@ -65,7 +65,12 @@
                         <input type="text" id="nome" name="name" class="input-text" value="<?php echo htmlspecialchars( $registerValues["name"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
                     </p>
                     <p class="form-row form-row-first">
-                        <label for="email">E-mail <span class="required">*</span>
+                        <label for="email">Login <span class="required">*</span>
+                        </label>
+                        <input type="text" id="email" name="deslogin" class="input-text" value="<?php echo htmlspecialchars( $registerValues["deslogin"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
+                    </p>
+                    <p class="form-row form-row-first">
+                        <label for="email">Email:  <span class="required">*</span>
                         </label>
                         <input type="email" id="email" name="email" class="input-text" value="<?php echo htmlspecialchars( $registerValues["email"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
                     </p>

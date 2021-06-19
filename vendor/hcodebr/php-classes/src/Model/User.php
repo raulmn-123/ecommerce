@@ -84,6 +84,7 @@ class User extends Model{
             return $user;
 
         } else {
+            
             throw new \Exception("Usuário inexistente ou senha inválida.");
         }
 
@@ -122,7 +123,7 @@ class User extends Model{
  	$sql = new Sql();
 
  	$results = $sql->select("CALL sp_users_save(:desperson, :deslogin, :despassword, :desemail, :nrphone, :inadmin)", array(
- 		":desperson"=>utf8_decode($this->getdesperson()),
+ 		":desperson"=>$this->getdesperson(),
  		":deslogin"=>$this->getdeslogin(),
  		":nrphone"=>$this->getnrphone(),
  		":desemail"=>$this->getdesemail(),

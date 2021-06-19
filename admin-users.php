@@ -38,29 +38,26 @@ $app->get('/admin/users/:iduser', function($iduser){
  
 });
 
-$app->post('/admin/users/create', function() {
+$app->post("/admin/users/create", function() {
 
+	User::verifyLogin();
 
 	$user = new User();
 
- 	$_POST["inadmin"] = (isset($_POST["inadmin"])) ? 1 : 0;
+	$_POST["inadmin"] = (isset($_POST["inadmin"]))?1:0;
 
- 	$_POST['despassword'] = password_hash($_POST["despassword"], PASSWORD_DEFAULT, [
+	$_POST['despassword'] = User::getPasswordHash($_POST['despassword']);
 
- 		"cost"=>12
-
- 	]);
-
- 	$user->setData($_POST);
+	$user->setData($_POST);
 
 	$user->save();
 
 	header("Location: /admin/users");
- 	exit;
-
-	
+	exit;
 
 });
+
+
 $app->post('/admin/users/:iduser', function($iduser) {
 	
 	$user = new User();

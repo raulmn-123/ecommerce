@@ -1,6 +1,8 @@
 <?php 
 
 use \Hcode\Model\User;
+use \Hcode\Model\Cart;
+use \Hcode\DB\Sql;
     function formatPrice($vlprice)
     {
     	if(!$vlprice > 0) $vlprice = 0;
@@ -17,4 +19,13 @@ use \Hcode\Model\User;
     	return $user->getdeslogin();
     }
 
+    function getNumProducts()
+    {
+
+
+        $cart = Cart::getFromSession();
+
+        
+
+    }
  ?>

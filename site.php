@@ -270,11 +270,11 @@ $app->get("/login", function() {
 
 });
 
-$app->post("/login", function() {
+$app->post("/login", function(){
 
-	try{
-	User::login($_POST['login'], $_POST['password']);
+	try {
 
+		User::login($_POST['login'], $_POST['password']);
 
 	} catch(Exception $e) {
 
@@ -334,7 +334,7 @@ $app->post("/register", function () {
 
 	$user->setData([
 		'inadmin'=>0, 
-		'deslogin'=>$_POST['email'], 
+		'deslogin'=>$_POST['deslogin'], 
 		'desperson'=>$_POST['name'], 
 		'desemail'=>$_POST['email'], 
 		'despassword'=>$_POST['password'], 
@@ -343,7 +343,7 @@ $app->post("/register", function () {
 
 	$user->save();
 
-	User::login($_POST['email'], $_POST['password']);
+	User::login($_POST['deslogin'], $_POST['password']);
 
 	header('Location: /checkout');
 	exit;
