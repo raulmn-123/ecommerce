@@ -3,6 +3,7 @@
 use \Hcode\Model\User;
 use \Hcode\Model\Cart;
 use \Hcode\DB\Sql;
+
     function formatPrice($vlprice)
     {
     	if(!$vlprice > 0) $vlprice = 0;
@@ -25,6 +26,22 @@ use \Hcode\DB\Sql;
 
         $cart = Cart::getFromSession();
 
+        $totals = $cart->getProductsTotals();
+
+        return $totals['nrqtd'];
+        
+
+    }
+
+        function getVlSubtotal()
+    {
+
+
+        $cart = Cart::getFromSession();
+
+        $totals = $cart->getProductsTotals();
+
+        return formatPrice($totals['vlprice']);
         
 
     }

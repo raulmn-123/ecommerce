@@ -241,11 +241,7 @@ class Cart extends Model{
 
             return $result;
 
-        } else {
-
-
-
-        }
+        } 
 
     }
 
