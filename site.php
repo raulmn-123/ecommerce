@@ -516,16 +516,16 @@ $app->get("/boleto/:idorder", function($idorder){
 	// DADOS DO SEU CLIENTE
 	$dadosboleto["sacado"] = $order->getdesperson();
 	$dadosboleto["endereco1"] = $order->getdesaddress(). " ". $order->getdesdistrict();
-	$dadosboleto["endereco2"] = $order->getdescity()."-".$order->getdesstate(). "-". $order->getdescountry()." CEP: ".$order->getdeszipcode();
+	$dadosboleto["endereco2"] = utf8_encode($order->getdescity())."-".utf8_decode($order->getdesstate()). "-". $order->getdescountry()." CEP: ".$order->getdeszipcode();
 
 	// INFORMACOES PARA O CLIENTE
-	$dadosboleto["demonstrativo1"] = "Pagamento de Compra na Loja Hcode E-commerce";
+	$dadosboleto["demonstrativo1"] = "Pagamento de Compra na Loja RDCommerce - Solução para PME's";
 	$dadosboleto["demonstrativo2"] = "Taxa bancária - R$ 0,00";
 	$dadosboleto["demonstrativo3"] = "";
 	$dadosboleto["instrucoes1"] = "- Sr. Caixa, cobrar multa de 2% após o vencimento";
 	$dadosboleto["instrucoes2"] = "- Receber até 10 dias após o vencimento";
-	$dadosboleto["instrucoes3"] = "- Em caso de dúvidas entre em contato conosco: suporte@hcode.com.br";
-	$dadosboleto["instrucoes4"] = "&nbsp; Emitido pelo sistema Projeto Loja Hcode E-commerce - www.hcode.com.br";
+	$dadosboleto["instrucoes3"] = "- Em caso de dúvidas entre em contato conosco: contato@rdcommerce.com.br";
+	$dadosboleto["instrucoes4"] = "&nbsp; Emitido pelo sistema Projeto Loja RDCommerce - Solução para PME's - www.rdcommerce.com.br";
 
 	// DADOS OPCIONAIS DE ACORDO COM O BANCO OU CLIENTE
 	$dadosboleto["quantidade"] = "";
@@ -547,11 +547,11 @@ $app->get("/boleto/:idorder", function($idorder){
 	$dadosboleto["carteira"] = "175";  // Código da Carteira: pode ser 175, 174, 104, 109, 178, ou 157
 
 	// SEUS DADOS
-	$dadosboleto["identificacao"] = "Hcode Treinamentos";
-	$dadosboleto["cpf_cnpj"] = "24.700.731/0001-08";
-	$dadosboleto["endereco"] = "Rua Ademar Saraiva Leão, 234 - Alvarenga, 09853-120";
-	$dadosboleto["cidade_uf"] = "São Bernardo do Campo - SP";
-	$dadosboleto["cedente"] = "HCODE TREINAMENTOS LTDA - ME";
+	$dadosboleto["identificacao"] = "RDCommerce - Solução para PME's";
+	$dadosboleto["cpf_cnpj"] = "00.000.000/0000";
+	$dadosboleto["endereco"] = "Rua Major José Inácio, 1876 - Centro";
+	$dadosboleto["cidade_uf"] = "São Carlos - SP";
+	$dadosboleto["cedente"] = "RDCommerce - Solução para PME's";
 
 	// NÃO ALTERAR!
 
@@ -600,6 +600,72 @@ $app->get("/profile/orders/:idorder", function($idorder) {
 		'cart'=>$cart->getValues(), 
 		'products'=>$cart->getProducts()
 	]);
+
+
+});
+
+$app->get("/profile/change-password", function () {
+
+	User::verifyLogin(false);
+
+	$page = new Page();
+
+	$page->setTpl("profile-change-password", [
+		'changePassError'=>User::getError(), 
+		'changePassSuccess'=>User::getSuccess()
+	]);
+
+});
+
+$app->post("/profile/change-password", function() {
+
+	User::verifyLogin(false);
+
+	if(!isset($_POST['current_pass']) || $_POST['current_pass'] === ''){
+
+		User::setError("Digite a senha atual.");
+		header("Location: /profile/change-password");
+		exit;
+
+	}
+
+	if(!isset($_POST['new_pass']) || $_POST['new_pass'] === ''){
+
+		User::setError("Digite a nova senha.");
+		header("Location: /profile/change-password");
+		exit;
+
+	}
+	if(!isset($_POST['new_pass_confirm']) || $_POST['new_pass_confirm'] === ''){
+
+		User::setError("Confirme a nova senha.");
+		header("Location: /profile/change-password");
+		exit;
+	}
+
+	if($_POST['current_pass'] === $_POST['new_pass']){
+
+		User::setError("Sua nova senha deve ser diferente da atual.");
+		header("Location: /profile/change-password");
+		exit;
+	}
+
+	$user = User::getFromSession();
+
+	if(!password_verify($_POST['current_pass'], $user->getdespassword())){
+
+		User::setError("Sua senha atual está inválida.");
+		header("Location: /profile/change-password");
+		exit;
+	}
+
+	$user->setdespassword($_POST['new_pass']);
+
+	$user->update();
+
+	User::setSuccess("Senha alterada com sucesso.");
+	header("Location: /profile/change-password");
+	exit;
 
 
 });
