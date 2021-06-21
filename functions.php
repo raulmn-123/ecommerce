@@ -14,6 +14,11 @@ use \Hcode\DB\Sql;
     	return User::checkLogin($inadmin);
     }
 
+    function formatDate($date)
+    {
+        return date('d/m/Y', strtotime($date));
+    }
+
     function getUserName()
     {
     	$user = User::getFromSession();
