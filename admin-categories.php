@@ -14,7 +14,7 @@ $app->get("/admin/categories", function(){
 	$page = (isset($_GET['page'])) ? (int)$_GET['page'] : 1;
 
 	if($search != '') {
-		
+
 		$pagination = Category::getPageSearch($search, $page);
 
 	} else {
@@ -23,8 +23,6 @@ $app->get("/admin/categories", function(){
 		
 
 	}
-
-	
  
  	$pages = [];
 
@@ -32,7 +30,7 @@ $app->get("/admin/categories", function(){
  	{
 
  		array_push($pages, [
- 			'href'=>'/admin/users?'.http_build_query([
+ 			'href'=>'/admin/categories?'.http_build_query([
  				'page'=>$x+1,
  				'search'=>$search
  			]), 
